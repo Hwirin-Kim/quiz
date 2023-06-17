@@ -1,6 +1,7 @@
 import React, { ChangeEvent, useEffect, useState } from "react";
 import styled from "styled-components";
 import Button from "../components/common/Button";
+import useTimer from "../utils/useTimer";
 
 export default function MainPage() {
   const [nickname, setNickname] = useState("");
