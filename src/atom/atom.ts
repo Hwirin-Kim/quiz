@@ -6,3 +6,18 @@ export const quizData = atom({
     quizList: [],
   },
 });
+
+export const nicknameAtom = atom({
+  key: "nicknameAtom",
+  default: "",
+});
+
+export const totalCorrectAnswerCntAtom = atom({
+  key: "totalAnswerCntAtom",
+  default: 0,
+});
+
+export const totalTimeAtom = atom({
+  key: "totalTimeAtom",
+  default: 0,
+});

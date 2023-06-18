@@ -1,30 +1,41 @@
 import React, { ChangeEvent, useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { useRecoilState } from "recoil";
 import styled from "styled-components";
+import { nicknameAtom } from "../atom/atom";
 import Button from "../components/common/Button";
 import useTimer from "../utils/useTimer";
 
 export default function MainPage() {
-  const [nickname, setNickname] = useState("");
+  const [inputNickname, setInputNickname] = useState("");
+  const [nickname, setNickname] = useRecoilState(nicknameAtom);
   const [buttonDisabled, setButtonDisabled] = useState(true);
-
+  const navigator = useNavigate();
   const onChangeInputNickname = (e: ChangeEvent<HTMLInputElement>) => {
     e.preventDefault();
-    setNickname(e.target.value);
+    setInputNickname(e.target.value);
   };
 
   useEffect(() => {
-    if (nickname === "") {
+    if (inputNickname === "") {
       setButtonDisabled(true);
     } else {
       setButtonDisabled(false);
     }
-  }, [nickname]);
+  }, [inputNickname]);
+
+  const onClickToQuizPage = () => {
+    setNickname(inputNickname);
+    navigator("/quiz");
+  };
 
   return (
     <Container>
       <NicknameBanner>닉네임 입력</NicknameBanner>
       <NicknameInput onChange={onChangeInputNickname} />
-      <Button disabled={buttonDisabled}>퀴즈풀기</Button>
+      <Button disabled={buttonDisabled} onClick={onClickToQuizPage}>
+        퀴즈풀기
+      </Button>
       <ExplanationTextBox>
         <ExplanationTextTitle>퀴즈 설명</ExplanationTextTitle>
         닉네임을 입력하셔야 퀴즈를 풀 수 있습니다. <br />
