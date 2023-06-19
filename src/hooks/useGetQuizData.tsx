@@ -45,7 +45,9 @@ export default function useGetQuizData() {
   };
 
   useEffect(() => {
-    fetchData();
+    if (quizList.length === 0) {
+      fetchData();
+    }
   }, []);
 
   return { isLoading, isError, quizList };
