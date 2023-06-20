@@ -1,12 +1,13 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useSetRecoilState } from "recoil";
+import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
 import styled from "styled-components";
-import { totalCorrectAnswerCntAtom } from "../atom/atom";
+import { nicknameAtom, totalCorrectAnswerCntAtom } from "../atom/atom";
 import Button from "../components/common/Button";
 import PageLayout from "../components/common/PageLayout";
 import SelectResult from "../components/quizpage/SelectResult";
 import useGetQuizData from "../hooks/useGetQuizData";
+import useRecord from "../hooks/useRecord";
 import useTimer from "../hooks/useTimer";
 
 export default function QuizPage() {
@@ -15,10 +16,18 @@ export default function QuizPage() {
   const [isCorrect, setIsCorrect] = useState(false);
   const [isSelected, setIsSelected] = useState(false);
   const [totalCorrectAnswer, setTotalCorrectAnswer] = useState(0);
-  const setTotalCorrectAnswerCnt = useSetRecoilState(totalCorrectAnswerCntAtom);
-  const timer = useTimer();
-  const navigator = useNavigate();
 
+  const setTotalCorrectAnswerCnt = useSetRecoilState(totalCorrectAnswerCntAtom);
+
+  const timer = useTimer();
+  const record = useRecord({
+    isSelected,
+    totalCorrectAnswer,
+    currentQuizNumber,
+    quizListLength: quizList.length - 1,
+  });
+  const navigator = useNavigate();
+  const nickname = useRecoilValue(nicknameAtom);
   const onClickNextQuiz = () => {
     setCurrentQuizNumber((prev) => prev + 1);
     setIsSelected(false);
@@ -45,11 +54,16 @@ export default function QuizPage() {
     }
   };
 
+  if (nickname === "O O O") {
+    navigator("/");
+  }
+
   if (isLoading) {
     return null;
   }
   return (
     <PageLayout>
+      <p>{nickname}</p>
       <QuestionNum>Question {currentQuizNumber + 1}</QuestionNum>
       <div>
         맞춘 갯수 : {totalCorrectAnswer} / {quizList.length}
@@ -70,9 +84,8 @@ export default function QuizPage() {
                   answer
                 )
               }
-            >
-              {answer}
-            </AnswerLi>
+              dangerouslySetInnerHTML={{ __html: answer }}
+            />
           );
         })}
       </AnswerOl>

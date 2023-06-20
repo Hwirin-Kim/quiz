@@ -2,6 +2,7 @@ import React from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import MainPage from "./pages/MainPage";
 import QuizPage from "./pages/QuizPage";
+import RankingPage from "./pages/RankingPage";
 import ResultPage from "./pages/ResultPage";
 
 export default function Router() {
@@ -11,6 +12,7 @@ export default function Router() {
         <Route path="/" element={<MainPage />} />
         <Route path="quiz" element={<QuizPage />} />
         <Route path="result" element={<ResultPage />} />
+        <Route path="rank" element={<RankingPage />} />
       </Routes>
     </BrowserRouter>
   );
