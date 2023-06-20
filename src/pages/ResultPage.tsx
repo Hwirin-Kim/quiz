@@ -9,6 +9,7 @@ import {
 } from "../atom/atom";
 import Button from "../components/common/Button";
 import PageLayout from "../components/common/PageLayout";
+import PieChart from "../components/resultpage/PieChart";
 import QuizResult from "../components/resultpage/QuizResult";
 
 export default function ResultPage() {
@@ -28,10 +29,45 @@ export default function ResultPage() {
         totalCorrectAnswerCnt={totalCorrectAnswerCnt}
         totalWrongAnswerCnt={totalWrongAnswerCnt}
       />
-      <Button onClick={() => navigator("/rank")}>랭킹보기</Button>
-      <Button onClick={() => navigator("/quiz")}>다시풀기</Button>
+      <ButtonWrap>
+        <Button onClick={() => navigator("/")}>메인으로</Button>
+        <Button onClick={() => navigator("/rank")}>랭킹보기</Button>
+        <Button onClick={() => navigator("/quiz")}>다시풀기</Button>
+      </ButtonWrap>
+      <ChartWrap>
+        <PieChart
+          total={totalQuestionCnt}
+          cnt={totalCorrectAnswerCnt}
+          lineColor="success"
+          size={200}
+          title="정답률"
+        />
+        <PieChart
+          total={totalQuestionCnt}
+          cnt={totalWrongAnswerCnt}
+          lineColor="wrong"
+          size={200}
+          title="오답률"
+        />
+      </ChartWrap>
     </PageLayout>
   );
 }
 
-const Nickname = styled.p``;
+const Nickname = styled.p`
+  display: flex;
+  justify-content: center;
+  font-size: 2rem;
+`;
+
+const ButtonWrap = styled.div`
+  display: flex;
+  justify-content: center;
+`;
+
+const ChartWrap = styled.div`
+  margin-top: 1rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;

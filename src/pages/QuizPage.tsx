@@ -40,12 +40,10 @@ export default function QuizPage() {
 
   const onClickSelectAnswer = (answer: string, selectAnswer: string) => {
     setIsSelected(true);
-
     if (isSelected) {
       alert("이미 정답을 선택하셨습니다.");
       return null;
     }
-
     if (answer === selectAnswer) {
       setTotalCorrectAnswer((prev) => prev + 1);
       setIsCorrect(true);
@@ -54,6 +52,7 @@ export default function QuizPage() {
     }
   };
 
+  //닉네임 입력을 하지 않고 디폴트 닉네임인 경우 메인으로 리다이렉트
   if (nickname === "O O O") {
     navigator("/");
   }

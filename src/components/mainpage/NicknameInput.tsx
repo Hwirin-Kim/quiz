@@ -3,11 +3,11 @@ import styled from "styled-components";
 
 type SetState<T> = Dispatch<SetStateAction<T>>;
 
-interface INicknamInputProps {
+interface INicknameInputProps {
   setState: SetState<string>;
 }
 
-export default function NicknameInput({ setState }: INicknamInputProps) {
+export default function NicknameInput({ setState }: INicknameInputProps) {
   const onChangeInputNickname = (e: ChangeEvent<HTMLInputElement>) => {
     e.preventDefault();
     setState(e.target.value);
