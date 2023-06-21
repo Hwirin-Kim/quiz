@@ -17,7 +17,7 @@ export default function useGetQuizData() {
     correct_answer: string;
     answers: string[];
   }
-  console.log("useGetQuizData렌더링");
+
   const [isLoading, setIsLoading] = useState(true);
   const [isError, setIsError] = useState(null);
   const [quizList, setQuizList] = useState<IQuizList[]>([]);

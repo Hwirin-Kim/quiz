@@ -1,10 +1,12 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useCallback, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
 import styled from "styled-components";
 import {
   nicknameAtom,
+  scoreRecordAtom,
   totalCorrectAnswerCntAtom,
+  totalTimeAtom,
   wrongAnswersAtom,
 } from "../atom/atom";
 import Button from "../components/common/Button";
@@ -12,41 +14,44 @@ import PageLayout from "../components/common/PageLayout";
 import Timer from "../components/common/Timer";
 import SelectResult from "../components/quizpage/SelectResult";
 import useGetQuizData from "../hooks/useGetQuizData";
-import useRecord from "../hooks/useRecord";
-
-import useTimer from "../hooks/useTimer";
 
 const QuizPage = () => {
   const { isLoading, isError, quizList } = useGetQuizData();
+
   const [currentQuizNumber, setCurrentQuizNumber] = useState(0);
   const [isCorrect, setIsCorrect] = useState(false);
   const [isSelected, setIsSelected] = useState(false);
   const [totalCorrectAnswer, setTotalCorrectAnswer] = useState(0);
+  const [quizFinished, setQuizFinished] = useState(false);
 
   const setTotalCorrectAnswerCnt = useSetRecoilState(totalCorrectAnswerCntAtom);
   const [wrongAnswers, setWrongAnswers] = useRecoilState(wrongAnswersAtom);
-
-  // const timer = useTimer();
-  const record = useRecord({
-    isSelected,
-    totalCorrectAnswer,
-    currentQuizNumber,
-    quizListLength: quizList.length - 1,
-  });
-
-  const navigator = useNavigate();
+  const setUserScore = useSetRecoilState(scoreRecordAtom);
+  const totalTime = useRecoilValue(totalTimeAtom);
   const nickname = useRecoilValue(nicknameAtom);
 
+  const navigator = useNavigate();
+
+  //다음문제/결과보기 버튼 함수
   const onClickNextQuiz = useCallback(() => {
     setCurrentQuizNumber((prev) => prev + 1);
     setIsSelected(false);
 
     if (currentQuizNumber === quizList.length - 1) {
       setTotalCorrectAnswerCnt(totalCorrectAnswer);
+      setUserScore((prev) => [
+        ...prev,
+        {
+          nickname: nickname,
+          totalTime: totalTime,
+          totalCorrectAnswerCnt: totalCorrectAnswer,
+        },
+      ]);
       navigator("/result");
     }
-  }, [currentQuizNumber, quizList]);
+  }, [currentQuizNumber, quizList, totalTime]);
 
+  //정답 판별 함수
   const onClickSelectAnswer = useCallback(
     (answer: string, selectAnswer: string) => {
       setIsSelected(true);
@@ -61,10 +66,13 @@ const QuizPage = () => {
         setIsCorrect(false);
         setWrongAnswers([...wrongAnswers, quizList[currentQuizNumber]]);
       }
+      if (currentQuizNumber === quizList.length - 1) {
+        setQuizFinished(true);
+      }
     },
     [isSelected]
   );
-  console.log("QuizPage렌더링");
+
   //닉네임 입력을 하지 않고 디폴트 닉네임인 경우 메인으로 리다이렉트
   if (nickname === "O O O") {
     navigator("/");
@@ -75,7 +83,7 @@ const QuizPage = () => {
   }
   return (
     <PageLayout>
-      <Timer />
+      <Timer end={quizFinished} />
       <Nickname>{nickname}님 화이팅하세요!</Nickname>
       <QuestionNum>Question {currentQuizNumber + 1}</QuestionNum>
       <CorrectAnswerPerTotal>

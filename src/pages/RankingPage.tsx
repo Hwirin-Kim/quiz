@@ -34,7 +34,7 @@ export default function RankingPage() {
       </RankWrapper>
       {sortedRecord.map((userInfo, index) => {
         return (
-          <RankWrapper marginbottom={0.5}>
+          <RankWrapper marginbottom={0.5} key={userInfo.nickname + index}>
             <RankGridItem>{index + 1}.</RankGridItem>
             <RankGridItem>{userInfo.nickname}</RankGridItem>
             <RankGridItem>{userInfo.totalCorrectAnswerCnt} 개</RankGridItem>
