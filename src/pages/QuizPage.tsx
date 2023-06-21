@@ -8,6 +8,7 @@ import PageLayout from "../components/common/PageLayout";
 import SelectResult from "../components/quizpage/SelectResult";
 import useGetQuizData from "../hooks/useGetQuizData";
 import useRecord from "../hooks/useRecord";
+
 import useTimer from "../hooks/useTimer";
 
 export default function QuizPage() {
@@ -26,6 +27,7 @@ export default function QuizPage() {
     currentQuizNumber,
     quizListLength: quizList.length - 1,
   });
+
   const navigator = useNavigate();
   const nickname = useRecoilValue(nicknameAtom);
   const onClickNextQuiz = () => {
@@ -62,11 +64,11 @@ export default function QuizPage() {
   }
   return (
     <PageLayout>
-      <p>{nickname}</p>
+      <Nickname>{nickname}님 화이팅하세요!</Nickname>
       <QuestionNum>Question {currentQuizNumber + 1}</QuestionNum>
-      <div>
-        맞춘 갯수 : {totalCorrectAnswer} / {quizList.length}
-      </div>
+      <CorrectAnswerPerTotal>
+        정답 : {totalCorrectAnswer} / {quizList.length}
+      </CorrectAnswerPerTotal>
       <Question
         dangerouslySetInnerHTML={{
           __html: quizList[currentQuizNumber].question,
@@ -130,4 +132,12 @@ const AnswerLi = styled.li`
   }
 `;
 
-const ExplainText = styled.div``;
+const CorrectAnswerPerTotal = styled.div`
+  font-size: 1.2rem;
+  margin: 0.5rem 0;
+`;
+
+const Nickname = styled.p`
+  font-size: 1.2rem;
+  margin: 0.5rem 0;
+`;

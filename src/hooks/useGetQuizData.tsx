@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { getQuiz } from "../api/api";
+import { fisherYates } from "../utils/fisherYates";
 
 export default function useGetQuizData() {
   interface IQuizData {
@@ -35,10 +36,13 @@ export default function useGetQuizData() {
 
   const transformData = (data: IQuizData[]) => {
     const transformedData = data.map((item: IQuizData) => {
+      const answers = [item.correct_answer, ...item.incorrect_answers];
+      const shuffledAnswers = fisherYates(answers);
+
       return {
         question: item.question,
         correct_answer: item.correct_answer,
-        answers: [item.correct_answer, ...item.incorrect_answers],
+        answers: shuffledAnswers,
       };
     });
     setQuizList(transformedData);
