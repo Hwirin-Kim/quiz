@@ -33,6 +33,7 @@ export default function ResultPage() {
         <Button onClick={() => navigator("/")}>메인으로</Button>
         <Button onClick={() => navigator("/rank")}>랭킹보기</Button>
         <Button onClick={() => navigator("/quiz")}>다시풀기</Button>
+        <Button onClick={() => navigator("/wrong")}>오답확인</Button>
       </ButtonWrap>
       <ChartWrap>
         <PieChart

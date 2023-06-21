@@ -32,8 +32,8 @@ export default function PieChart({
             r={radius}
             fill="transparent"
             circum={circum}
-            dashOffset={dashOffset}
-            lineColor={lineColor}
+            dashoffset={dashOffset}
+            linecolor={lineColor}
           />
         </Svg>
       </Wrapper>
@@ -53,16 +53,16 @@ const Svg = styled.svg``;
 
 interface ICircleProps {
   circum: number;
-  dashOffset: number;
-  lineColor: string;
+  dashoffset: number;
+  linecolor: string;
 }
 
-const lineKeyframe = (circum: number, dashOffset: number) => keyframes`
+const lineKeyframe = (circum: number, dashoffset: number) => keyframes`
     from {
       stroke-dashoffset: ${circum};
     }
     to {
-      stroke-dashoffset: ${dashOffset};
+      stroke-dashoffset: ${dashoffset};
     }
 `;
 
@@ -72,12 +72,12 @@ const Circle = styled.circle<ICircleProps>`
   stroke-dasharray: ${(props) => props.circum};
   stroke-dashoffset: ${(props) => props.circum};
   fill: #e1dede;
-  stroke: ${(props) => (props.lineColor === "success" ? "#5353d7" : "#d75353")};
+  stroke: ${(props) => (props.linecolor === "success" ? "#5353d7" : "#d75353")};
   stroke-width: 6;
   stroke-linecap: round;
   cx: 50;
   cy: 50;
-  animation: ${(props) => lineKeyframe(props.circum, props.dashOffset)} 1s
+  animation: ${(props) => lineKeyframe(props.circum, props.dashoffset)} 1s
     forwards;
 `;
 

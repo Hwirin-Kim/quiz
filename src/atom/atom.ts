@@ -25,3 +25,14 @@ export const scoreRecordAtom = atom<IScoreRecordAtom[]>({
   key: "scoreRecordAtom",
   default: [],
 });
+
+interface IQuizList {
+  question: string;
+  correct_answer: string;
+  answers: string[];
+}
+
+export const wrongAnswersAtom = atom<IQuizList[]>({
+  key: "wrongAnswers",
+  default: [],
+});

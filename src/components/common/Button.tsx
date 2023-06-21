@@ -23,6 +23,7 @@ const ButtonComponent = styled.button`
   padding: 0.3rem;
   border-radius: 0.5rem;
   margin: 0.3rem;
+  max-width: 10rem;
 
   &:disabled {
     background-color: #d3d2d2;

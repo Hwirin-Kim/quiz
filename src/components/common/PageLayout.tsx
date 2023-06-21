@@ -14,5 +14,9 @@ const Container = styled.div`
   height: 500px;
   border-radius: 2rem;
   padding: 1rem;
-  background-color: #edf7a5;
+  background-color: #ebe7fe;
+  overflow-y: scroll;
+  &::-webkit-scrollbar {
+    display: none;
+  }
 `;

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { getQuiz } from "../api/api";
 import { fisherYates } from "../utils/fisherYates";
 
@@ -17,7 +17,7 @@ export default function useGetQuizData() {
     correct_answer: string;
     answers: string[];
   }
-
+  console.log("useGetQuizData렌더링");
   const [isLoading, setIsLoading] = useState(true);
   const [isError, setIsError] = useState(null);
   const [quizList, setQuizList] = useState<IQuizList[]>([]);
@@ -34,7 +34,7 @@ export default function useGetQuizData() {
     }
   };
 
-  const transformData = (data: IQuizData[]) => {
+  const transformData = useCallback((data: IQuizData[]) => {
     const transformedData = data.map((item: IQuizData) => {
       const answers = [item.correct_answer, ...item.incorrect_answers];
       const shuffledAnswers = fisherYates(answers);
@@ -46,7 +46,7 @@ export default function useGetQuizData() {
       };
     });
     setQuizList(transformedData);
-  };
+  }, []);
 
   useEffect(() => {
     if (quizList.length === 0) {
