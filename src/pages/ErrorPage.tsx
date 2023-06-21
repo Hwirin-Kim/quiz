@@ -24,9 +24,6 @@ const ErrorBox = styled.div`
   background-color: #000;
 `;
 
-const neonFontUrl =
-  "https://s3-us-west-2.amazonaws.com/s.cdpn.io/707108/neon.ttf";
-
 const neonAnimation = keyframes`
   0%,
   100% {
