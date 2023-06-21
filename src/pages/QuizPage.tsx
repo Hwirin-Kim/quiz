@@ -10,6 +10,7 @@ import {
   wrongAnswersAtom,
 } from "../atom/atom";
 import Button from "../components/common/Button";
+import LoadingSpinner from "../components/common/LoadingSpinner";
 import PageLayout from "../components/common/PageLayout";
 import Timer from "../components/common/Timer";
 import SelectResult from "../components/quizpage/SelectResult";
@@ -78,8 +79,16 @@ const QuizPage = () => {
     navigator("/");
   }
 
+  if (isError) {
+    navigator("/*");
+  }
+
   if (isLoading) {
-    return null;
+    return (
+      <PageLayout>
+        <LoadingSpinner />
+      </PageLayout>
+    );
   }
   return (
     <PageLayout>
