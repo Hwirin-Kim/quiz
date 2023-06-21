@@ -15,9 +15,10 @@ export default function WrongAnswerPage() {
     <PageLayout>
       <Container>
         <Title>오답 리스트</Title>
-        {wrongAnswers.map((answer) => {
+        {wrongAnswers.map((answer, index) => {
           return (
             <WrongAnswer
+              key={answer.correct_answer + index}
               question={answer.question}
               answer={answer.correct_answer}
             />

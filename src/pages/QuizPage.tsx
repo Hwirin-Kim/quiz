@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
 import styled from "styled-components";
@@ -32,6 +32,10 @@ const QuizPage = () => {
   const nickname = useRecoilValue(nicknameAtom);
 
   const navigator = useNavigate();
+
+  useEffect(() => {
+    setWrongAnswers([]);
+  }, []);
 
   //다음문제/결과보기 버튼 함수
   const onClickNextQuiz = useCallback(() => {
@@ -71,7 +75,7 @@ const QuizPage = () => {
         setQuizFinished(true);
       }
     },
-    [isSelected]
+    [isSelected, currentQuizNumber, quizList, wrongAnswers, setWrongAnswers]
   );
 
   //닉네임 입력을 하지 않고 디폴트 닉네임인 경우 메인으로 리다이렉트
