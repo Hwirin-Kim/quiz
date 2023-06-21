@@ -37,6 +37,26 @@
 
 ---
 
+## 라이브러리
+
+1. styled-components
+
+   - 스타일링은 styled-components를 사용하였습니다.
+
+2. react-router-dom
+
+   - 페이지 라우팅을 위해 사용하였습니다.
+
+3. axios
+
+   - data fetching에 사용하였습니다.
+
+4. recoil
+
+   - 상태관리에 비교적 사용성이 쉬운 recoil을 선택하였습니다.
+
+---
+
 ## 트러블슈팅
 
 ### keyframes의 변수 공유 문제
